@@ -5,7 +5,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public abstract class AbstractBicycle {
-    private String brand;
+    private String brend;
     private int maxSpeed;
     private int currentSpeed;
     public abstract int getMaxDistance();
