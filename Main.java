@@ -1,22 +1,30 @@
-import java.util.regex.*;
+package iot.algo.part2;
 
-public class Main {
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main extends SentenceDeleter {
     public static void main(String[] args) {
-        String text = "Hello! This is a sample text with multiple sentences. " +
-                "It includes some exclamation sentences, like this one! " +
-                "And also some hyphenated words, like pre-owned, pre-processed and self-contained! " +
-                "Let's see if we can remove those sentences.";
+        Main remover = new Main();
 
-        Pattern pattern = Pattern.compile("\\b[\\w-]+-[\\w-]+(\\s+[\\w-]+-[\\w-]+)+!\\b");
-        Matcher matcher = pattern.matcher(text);
+        String text = "This is an example of a sentence with pre-owned hyphenated-word! " +
+                "What a beautiful-day it-is today! " +
+                "I can't believe it's already May! " +
+                "What-an -amazing-performance by the dancers!"
+                + "Something and text text!";
 
-        while (matcher.find()) {
-            String sentence = matcher.group();
-            if (sentence.split("\\s+").length > 2) {
-                text = text.replace(sentence, "");
+        List<String> sentences = remover.splitIntoSentences(text);
+
+        List<String> filteredSentences = new ArrayList<>();
+        for (String sentence : sentences) {
+            if (!remover.hasExclamationWithHyphenatedWords(sentence)) {
+                filteredSentences.add(sentence.replaceAll("\\s+-\\s+", " "));
             }
         }
 
-        System.out.println(text);
+        String result = remover.joinSentences(filteredSentences);
+        System.out.println(result);
     }
+
 }
